@@ -18,8 +18,8 @@ public:
             inorder_map[inorder[i]] = i;
         }
 
-        int preorder_ind = 0;
-        return build(inorder_map,preorder,preorder_ind, 0, inorder.size()-1);
+        int preorder_idx = 0;
+        return build(inorder_map,preorder,preorder_idx, 0, inorder.size()-1);
         
     }
 
