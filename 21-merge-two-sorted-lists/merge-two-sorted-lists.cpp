@@ -12,25 +12,48 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* List1, ListNode* List2) {
         ListNode dummy(0);
-        ListNode* current = &dummy;
-
-        while(List1!=nullptr && List2!=nullptr){
-            if(List1->val <=List2->val){
-                current->next = List1;
-                List1 = List1->next;
-            }else{
-                current->next = List2;
-                List2 = List2->next;
-            }
-            current = current->next;
-        }
-        if(List1!=nullptr){
-            current->next = List1;
-        }else{
-            current->next = List2;
-        }
-        return dummy.next;
-
+        ListNode* ans = &dummy;
         
+        if(List1==NULL &&  List2 == NULL){
+            return nullptr;
+        }
+        else if(List1 != NULL && List2 == NULL){
+            return List1;
+        }
+        else if(List1 == NULL && List2 != NULL){
+            return List2;
+        }
+        
+        ListNode* curr = List1;
+        ListNode* curr1 = List2;
+
+        while(curr!= nullptr && curr1!=nullptr){
+            if(curr->val < curr1->val){
+                ans->next = curr;
+                curr = curr->next;
+            }
+            else if(curr->val > curr1->val){
+                ans->next = curr1;
+                curr1 = curr1->next;
+            }
+            else if(curr->val == curr1->val){
+                ans->next = curr;
+                curr = curr->next;
+                ans = ans->next;
+                ans->next = curr1;
+                curr1 = curr1->next;
+            }
+            ans = ans->next;
+        }
+        
+        // Add remaining elements
+        if(curr != nullptr){
+            ans->next = curr;
+        }
+        if(curr1 != nullptr){
+            ans->next = curr1;
+        }
+        
+        return dummy.next;
     }
 };
