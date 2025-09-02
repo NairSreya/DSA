@@ -11,27 +11,21 @@
  */
 class Solution {
 private:
-    pair<int,int> diameterFast(TreeNode* root){
-        //base case
-        if(root==NULL){
-            pair<int,int> p = make_pair(0,0);
-                return p;
+    int diameter(TreeNode* root, int& maxDiam){
+        if(!root){
+            return 0;
         }
 
-        pair<int,int> left = diameterFast(root->left);
-        pair<int,int> right = diameterFast(root->right);
-
-        int op1 = left.first;
-        int op2 = right.first;
-        int op3 = left.second + right.second  ;
-
-        pair<int,int> ans; 
-        ans.first = max(op1, max(op2,op3));
-        ans.second = max(left.second , right.second) + 1;
-        return ans; 
+        int left = diameter(root->left,maxDiam );
+        int right = diameter(root->right,maxDiam );
+        maxDiam = max(left+right, maxDiam);
+        return max(left,right)+1;
     }
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        return diameterFast(root).first;
-    }   
+        int maxDiam = 0;
+        diameter(root, maxDiam);
+        return maxDiam;
+        
+    }
 };
